@@ -1,0 +1,17 @@
+testc++-collections
+*.o
+*.lo
+*.la
+**/.deps/
+**/.libs/
+*.m4
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache/
+configure
+config.log
+config.status
+libtool
+ltmain.sh
+
