@@ -12,22 +12,22 @@
 template<typename E>
 class ListIterator {
 public:
-	virtual bool hasNext() = 0;
-	virtual E& next() = 0;
+	virtual bool hasNext() const = 0;
+	virtual const E& next() const = 0;
 };
 
 template<typename E>
 class List {
 public:
-	virtual int size() = 0;
-	virtual bool isEmpty() = 0;
-	virtual bool add(E& e) = 0;
-	virtual void add(int index, E& e) = 0;
-	virtual E& remove(int index) = 0;
-	virtual E& set(int index, E& e) = 0;
-	virtual E& get(int index) = 0;
-//	virtual ListIterator<E> iterator() = 0;
-//	virtual ListIterator<E> iterator(int index) = 0;
+	virtual int size() const = 0;
+	virtual bool isEmpty() const = 0;
+	virtual bool add(const E& e) = 0;
+	virtual void add(int index, const E& e) = 0;
+	virtual const E& remove(int index) = 0;
+	virtual const E& set(int index, const E& e) = 0;
+	virtual const E& get(int index) const = 0;
+//	virtual ListIterator<E> iterator() const = 0;
+//	virtual ListIterator<E> iterator(int index) const = 0;
 };
 
 #endif /* LIST_H */

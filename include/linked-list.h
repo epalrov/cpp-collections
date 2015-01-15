@@ -13,11 +13,11 @@
 
 template<typename E>
 struct ListNode {
-	E *elem;
+	const E *elem;
 	ListNode<E> *next;
 	ListNode<E> *prev;
 
-	ListNode(E *e, ListNode<E> *n, ListNode<E> *p);
+	ListNode(const E *e, ListNode<E> *n, ListNode<E> *p);
 	~ListNode();
 };
 
@@ -27,8 +27,8 @@ public:
 	LinkedListIterator(int index);
 	LinkedListIterator();
 	~LinkedListIterator();
-	bool hasNext();
-	E& next();
+	bool hasNext() const;
+	const E& next() const;
 private:
 	ListNode<E> *nextNode;
 	ListNode<E> *currNode;
@@ -40,15 +40,15 @@ class LinkedList : public List<E> {
 public:
 	LinkedList();
 	~LinkedList();
-	int size();
-	bool isEmpty();
-	bool add(E& e);
-	void add(int index, E& e);
-	E& remove(int index);
-	E& set(int index, E& e);
-	E& get(int index);
-	ListIterator<E> iterator();
-	ListIterator<E> iterator(int index);
+	int size() const;
+	bool isEmpty() const;
+	bool add(const E& e);
+	void add(int index, const E& e);
+	const E& remove(int index);
+	const E& set(int index, const E& e);
+	const E& get(int index) const;
+	ListIterator<E> iterator() const;
+	ListIterator<E> iterator(int index) const;
 private:
 	ListNode<E> *head;
 	int count;

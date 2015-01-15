@@ -46,7 +46,7 @@ LinkedList<E>::~LinkedList() {
  * Returns the number of elements in this list.
  */
 template<typename E>
-int LinkedList<E>::size() {
+int LinkedList<E>::size() const {
 	return count;
 }
 
@@ -54,7 +54,7 @@ int LinkedList<E>::size() {
  * Returns <tt>true</tt> if this list contains no elements.
  */
 template<typename E>
-bool LinkedList<E>::isEmpty() {
+bool LinkedList<E>::isEmpty() const {
 	return count == 0 ? true : false;
 }
 
@@ -62,7 +62,7 @@ bool LinkedList<E>::isEmpty() {
  * Appends the specified element to the end of this list.
  */
 template<typename E>
-bool LinkedList<E>::add(E& e) {
+bool LinkedList<E>::add(const E& e) {
 	ListNode<E> *n = head;
 	ListNode<E> *node = new ListNode<E>(&e, n, n->prev);
 	n->prev->next = node;
@@ -75,7 +75,7 @@ bool LinkedList<E>::add(E& e) {
  * Inserts the specified element at the specified position in this list.
  */
 template<typename E>
-void LinkedList<E>::add(int index, E& e) {
+void LinkedList<E>::add(int index, const E& e) {
 	ListNode<E> *n = head;
 	if (index == count) {
 		n = head;
@@ -99,7 +99,7 @@ void LinkedList<E>::add(int index, E& e) {
  * Returns the element at the specified position in this list.
  */
 template<typename E>
-E& LinkedList<E>::get(int index) {
+const E& LinkedList<E>::get(int index) const {
 	ListNode<E> *n = head;
 	if (index >= 0 && index < count/2) {
 		for (int i = 0; i <= index; i++)
@@ -119,7 +119,7 @@ E& LinkedList<E>::get(int index) {
  * specified element.
  */
 template<typename E>
-E& LinkedList<E>::set(int index, E& e) {
+const E& LinkedList<E>::set(int index, const E& e) {
 	ListNode<E> *n = head;
 	if (index >= 0 && index < count/2) {
 		for (int i = 0; i <= index; i++)
@@ -131,7 +131,7 @@ E& LinkedList<E>::set(int index, E& e) {
 		//throw new IndexOutOfBoundsException(
 		//	"Index: " + index + ", Size: " + count);
 	}
-	E& oldElem = *(n->elem);
+	const E& oldElem = *(n->elem);
 	n->elem = &e;
 	return oldElem;
 }
@@ -140,7 +140,7 @@ E& LinkedList<E>::set(int index, E& e) {
  * Removes the element at the specified position in this list.
  */
 template<typename E>
-E& LinkedList<E>::remove(int index) {
+const E& LinkedList<E>::remove(int index) {
 	ListNode<E> *n = head;
 	if (index >= 0 && index < count/2) {
 		for (int i = 0; i <= index; i++)
@@ -160,7 +160,7 @@ E& LinkedList<E>::remove(int index) {
 }
 
 template<typename E>
-ListNode<E>::ListNode(E *e, ListNode<E> *n, ListNode<E> *p) {
+ListNode<E>::ListNode(const E *e, ListNode<E> *n, ListNode<E> *p) {
 	elem = e;
 	next = n;
 	prev = p;
