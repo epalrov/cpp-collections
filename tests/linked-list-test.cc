@@ -28,14 +28,18 @@ public:
 
 	void testLinkedList() {
 		int a[] = { 4, 3, 2, 1 };
-		LinkedList<int> l = LinkedList<int>();
+		List<int> *l = new LinkedList<int>();
 
 		for (int i = 0; i < ARRAY_SIZE(a); i++)
-			CPPUNIT_ASSERT(l.add(a[i]));
-		CPPUNIT_ASSERT_EQUAL(l.size(), ARRAY_SIZE(a));
+			CPPUNIT_ASSERT(l->add(a[i]));
+		CPPUNIT_ASSERT_EQUAL(l->size(), ARRAY_SIZE(a));
 
 		for (int i = 0; i < ARRAY_SIZE(a); i++)
-			CPPUNIT_ASSERT_EQUAL(l.get(i), a[i]);
+			CPPUNIT_ASSERT_EQUAL(l->get(i), a[i]);
+
+		ListIterator<int> *itr = l->iterator();
+		for (int i = 0; itr->hasNext(); i++)
+			CPPUNIT_ASSERT_EQUAL(itr->next(), a[i]);
 	}
 };
 

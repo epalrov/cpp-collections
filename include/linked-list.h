@@ -17,6 +17,7 @@ struct LinkedListNode {
 	LinkedListNode<E> *next;
 	LinkedListNode<E> *prev;
 
+	LinkedListNode();
 	LinkedListNode(const E *e, LinkedListNode<E> *n, LinkedListNode<E> *p);
 	~LinkedListNode();
 };
@@ -55,8 +56,8 @@ public:
 	const E& set(int index, const E& e);
 	// iterator
 	friend class LinkedListIterator<E>;
-	ListIterator<E>& iterator() const;
-	ListIterator<E>& iterator(int index) const;
+	ListIterator<E>* iterator() const;
+	ListIterator<E>* iterator(int index) const;
 private:
 	LinkedListNode<E> *head;
 	int count;

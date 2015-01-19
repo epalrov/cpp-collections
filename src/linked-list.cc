@@ -30,7 +30,7 @@
  */
 template<typename E>
 LinkedList<E>::LinkedList() {
-	head = new LinkedListNode<E>(NULL, NULL, NULL);
+	head = new LinkedListNode<E>();
 	head->next = head;
 	head->prev = head;
 	count = 0;
@@ -168,24 +168,28 @@ const E& LinkedList<E>::remove(int index) {
 }
 
 template<typename E>
-ListIterator<E>& LinkedList<E>::iterator() const {
-	return *(new LinkedListIterator<E>(this, 0));
+ListIterator<E>* LinkedList<E>::iterator() const {
+	return new LinkedListIterator<E>(this);
 }
 
 template<typename E>
-ListIterator<E>& LinkedList<E>::iterator(int index) const {
-	return *(new LinkedListIterator<E>(this, index));
+ListIterator<E>* LinkedList<E>::iterator(int index) const {
+	return new LinkedListIterator<E>(this, index);
 }
 
 /**
  * Constructs a <tt>LinkedListIterator</tt>
  */
 template<typename E>
-LinkedListIterator<E>::LinkedListIterator(const LinkedList<E> *l, int index) {
+LinkedListIterator<E>::LinkedListIterator(const LinkedList<E> *l) {
 	list = l;
 	currNode = list->head;
-	nextNode = list->head;
+	nextNode = list->head->next;
 	nextIndex = 1;
+}
+
+template<typename E>
+LinkedListIterator<E>::LinkedListIterator(const LinkedList<E> *l, int index) {
 }
 
 template<typename E>
@@ -203,6 +207,13 @@ const E& LinkedListIterator<E>::next() {
 	nextNode = currNode->next;
 	nextIndex++;
 	return *(currNode->elem);
+}
+
+/**
+ * Constructs a <tt>LinkedListNode</tt>
+ */
+template<typename E>
+LinkedListNode<E>::LinkedListNode() : elem(NULL), next(NULL), prev(NULL) {
 }
 
 template<typename E>
