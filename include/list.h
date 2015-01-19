@@ -13,7 +13,7 @@ template<typename E>
 class ListIterator {
 public:
 	virtual bool hasNext() const = 0;
-	virtual const E& next() const = 0;
+	virtual const E& next() = 0;
 };
 
 template<typename E>
@@ -26,8 +26,8 @@ public:
 	virtual const E& remove(int index) = 0;
 	virtual const E& set(int index, const E& e) = 0;
 	virtual const E& get(int index) const = 0;
-//	virtual ListIterator<E> iterator() const = 0;
-//	virtual ListIterator<E> iterator(int index) const = 0;
+	virtual ListIterator<E>& iterator() const = 0;
+	virtual ListIterator<E>& iterator(int index) const = 0;
 };
 
 #endif /* LIST_H */

@@ -12,26 +12,30 @@
 #include "list.h"
 
 template<typename E>
-struct ListNode {
+struct LinkedListNode {
 	const E *elem;
-	ListNode<E> *next;
-	ListNode<E> *prev;
+	LinkedListNode<E> *next;
+	LinkedListNode<E> *prev;
 
-	ListNode(const E *e, ListNode<E> *n, ListNode<E> *p);
-	~ListNode();
+	LinkedListNode(const E *e, LinkedListNode<E> *n, LinkedListNode<E> *p);
+	~LinkedListNode();
 };
+
+template<typename E>
+class LinkedList;
 
 template<typename E>
 class LinkedListIterator : public ListIterator<E> {
 public:
-	LinkedListIterator(int index);
-	LinkedListIterator();
+	LinkedListIterator(const LinkedList<E> *list);
+	LinkedListIterator(const LinkedList<E> *list, int index);
 	~LinkedListIterator();
 	bool hasNext() const;
-	const E& next() const;
+	const E& next();
 private:
-	ListNode<E> *nextNode;
-	ListNode<E> *currNode;
+	const LinkedList<E> *list;
+	LinkedListNode<E> *nextNode;
+	LinkedListNode<E> *currNode;
 	int nextIndex;
 };
 
@@ -40,17 +44,21 @@ class LinkedList : public List<E> {
 public:
 	LinkedList();
 	~LinkedList();
+	// query
 	int size() const;
 	bool isEmpty() const;
+	const E& get(int index) const;
+	// modification
 	bool add(const E& e);
 	void add(int index, const E& e);
 	const E& remove(int index);
 	const E& set(int index, const E& e);
-	const E& get(int index) const;
-	ListIterator<E> iterator() const;
-	ListIterator<E> iterator(int index) const;
+	// iterator
+	friend class LinkedListIterator<E>;
+	ListIterator<E>& iterator() const;
+	ListIterator<E>& iterator(int index) const;
 private:
-	ListNode<E> *head;
+	LinkedListNode<E> *head;
 	int count;
 };
 

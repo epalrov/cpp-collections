@@ -26,11 +26,11 @@
  */
 
 /**
-  * Constructs an empty <tt>LinkedList</tt>
-  */
+ * Constructs an empty <tt>LinkedList</tt>
+ */
 template<typename E>
 LinkedList<E>::LinkedList() {
-	head = new ListNode<E>(NULL, NULL, NULL);
+	head = new LinkedListNode<E>(NULL, NULL, NULL);
 	head->next = head;
 	head->prev = head;
 	count = 0;
@@ -38,8 +38,14 @@ LinkedList<E>::LinkedList() {
 
 template<typename E>
 LinkedList<E>::~LinkedList() {
-// FIXME: delete all ListNode!!
-	count = 0;
+	LinkedListNode<E> *n;
+	while (count > 0) {
+		n = head->next;
+		head->next = n->next;
+		count--;
+		delete n;
+	}
+	delete head;
 }
 
 /**
@@ -63,8 +69,8 @@ bool LinkedList<E>::isEmpty() const {
  */
 template<typename E>
 bool LinkedList<E>::add(const E& e) {
-	ListNode<E> *n = head;
-	ListNode<E> *node = new ListNode<E>(&e, n, n->prev);
+	LinkedListNode<E> *n = head;
+	LinkedListNode<E> *node = new LinkedListNode<E>(&e, n, n->prev);
 	n->prev->next = node;
 	n->prev = node;
 	count++;
@@ -76,7 +82,7 @@ bool LinkedList<E>::add(const E& e) {
  */
 template<typename E>
 void LinkedList<E>::add(int index, const E& e) {
-	ListNode<E> *n = head;
+	LinkedListNode<E> *n = head;
 	if (index == count) {
 		n = head;
 	} else if (index >= 0 && index < count/2) {
@@ -89,7 +95,7 @@ void LinkedList<E>::add(int index, const E& e) {
 		//throw new IndexOutOfBoundsException(
 		//	"Index: " + index + ", Size: " + count);
 	}
-	ListNode<E> *node = new ListNode<E>(&e, n, n->prev);
+	LinkedListNode<E> *node = new LinkedListNode<E>(&e, n, n->prev);
 	n->prev->next = node;
 	n->prev = node;
 	count++;
@@ -100,7 +106,7 @@ void LinkedList<E>::add(int index, const E& e) {
  */
 template<typename E>
 const E& LinkedList<E>::get(int index) const {
-	ListNode<E> *n = head;
+	LinkedListNode<E> *n = head;
 	if (index >= 0 && index < count/2) {
 		for (int i = 0; i <= index; i++)
 			n = n->next;
@@ -120,7 +126,7 @@ const E& LinkedList<E>::get(int index) const {
  */
 template<typename E>
 const E& LinkedList<E>::set(int index, const E& e) {
-	ListNode<E> *n = head;
+	LinkedListNode<E> *n = head;
 	if (index >= 0 && index < count/2) {
 		for (int i = 0; i <= index; i++)
 			n = n->next;
@@ -141,7 +147,7 @@ const E& LinkedList<E>::set(int index, const E& e) {
  */
 template<typename E>
 const E& LinkedList<E>::remove(int index) {
-	ListNode<E> *n = head;
+	LinkedListNode<E> *n = head;
 	if (index >= 0 && index < count/2) {
 		for (int i = 0; i <= index; i++)
 			n = n->next;
@@ -154,21 +160,62 @@ const E& LinkedList<E>::remove(int index) {
 	}
 	n->next->prev = n->prev;
 	n->prev->next = n->next;
-// FIXME: delete the ListNode!!
 	count--;
-	return *(n->elem); 
+
+	const E& oldElem = *(n->elem);
+	delete n;
+	return oldElem;
 }
 
 template<typename E>
-ListNode<E>::ListNode(const E *e, ListNode<E> *n, ListNode<E> *p) {
+ListIterator<E>& LinkedList<E>::iterator() const {
+	return *(new LinkedListIterator<E>(this, 0));
+}
+
+template<typename E>
+ListIterator<E>& LinkedList<E>::iterator(int index) const {
+	return *(new LinkedListIterator<E>(this, index));
+}
+
+/**
+ * Constructs a <tt>LinkedListIterator</tt>
+ */
+template<typename E>
+LinkedListIterator<E>::LinkedListIterator(const LinkedList<E> *l, int index) {
+	list = l;
+	currNode = list->head;
+	nextNode = list->head;
+	nextIndex = 1;
+}
+
+template<typename E>
+LinkedListIterator<E>::~LinkedListIterator() {
+}
+
+template<typename E>
+bool LinkedListIterator<E>::hasNext() const {
+	return nextIndex == list->count ? false : true;
+}
+
+template<typename E>
+const E& LinkedListIterator<E>::next() {
+	currNode = nextNode;
+	nextNode = currNode->next;
+	nextIndex++;
+	return *(currNode->elem);
+}
+
+template<typename E>
+LinkedListNode<E>::LinkedListNode(const E *e, LinkedListNode<E> *n, LinkedListNode<E> *p) {
 	elem = e;
 	next = n;
 	prev = p;
 }
 
 template<typename E>
-ListNode<E>::~ListNode() {
+LinkedListNode<E>::~LinkedListNode() {
 }
 
 template class LinkedList<int>;
+template class LinkedListIterator<int>;
 
