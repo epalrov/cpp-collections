@@ -6,7 +6,9 @@
  * Author: Paolo Rovelli <paolorovelli@yahoo.it>
  */
 
-#include <cstdlib>
+#include <string>
+#include <sstream>
+#include <stdexcept>
 
 #include "list.h"
 #include "linked-list.h"
@@ -92,8 +94,9 @@ void LinkedList<E>::add(int index, const E& e) {
 		for (int i = count; i > index; i--)
 			n = n->prev;
 	} else {
-		//throw new IndexOutOfBoundsException(
-		//	"Index: " + index + ", Size: " + count);
+		std::stringstream s;
+		s << "Index: " << index << ", Size: " << count;
+		throw std::out_of_range(s.str());
 	}
 	LinkedListNode<E> *node = new LinkedListNode<E>(&e, n, n->prev);
 	n->prev->next = node;
@@ -114,8 +117,9 @@ const E& LinkedList<E>::get(int index) const {
 		for (int i = count; i > index; i--)
 			n = n->prev;
 	} else {
-		//throw new IndexOutOfBoundsException(
-		//	"Index: " + index + ", Size: " + count);
+		std::stringstream s;
+		s << "Index: " << index << ", Size: " << count;
+		throw std::out_of_range(s.str());
 	}
 	return *(n->elem); 
 }
@@ -134,8 +138,9 @@ const E& LinkedList<E>::set(int index, const E& e) {
 		for (int i = count; i > index; i--)
 			n = n->prev;
 	} else {
-		//throw new IndexOutOfBoundsException(
-		//	"Index: " + index + ", Size: " + count);
+		std::stringstream s;
+		s << "Index: " << index << ", Size: " << count;
+		throw std::out_of_range(s.str());
 	}
 	const E& oldElem = *(n->elem);
 	n->elem = &e;
@@ -155,8 +160,9 @@ const E& LinkedList<E>::remove(int index) {
 		for (int i = count; i > index; i--)
 			n = n->prev;
 	} else {
-		//throw new IndexOutOfBoundsException(
-		//	"Index: " + index + ", Size: " + count);
+		std::stringstream s;
+		s << "Index: " << index << ", Size: " << count;
+		throw std::out_of_range(s.str());
 	}
 	n->next->prev = n->prev;
 	n->prev->next = n->next;
@@ -229,4 +235,6 @@ LinkedListNode<E>::~LinkedListNode() {
 
 template class LinkedList<int>;
 template class LinkedListIterator<int>;
+template class LinkedList<std::string>;
+template class LinkedListIterator<std::string>;
 

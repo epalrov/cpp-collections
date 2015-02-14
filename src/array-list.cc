@@ -6,7 +6,9 @@
  * Author: Paolo Rovelli <paolorovelli@yahoo.it>
  */
 
-#include <cstdlib>
+#include <string>
+#include <sstream>
+#include <stdexcept>
 
 #include "list.h"
 #include "array-list.h"
@@ -69,8 +71,9 @@ bool ArrayList<E>::add(const E& e) {
 template<typename E>
 void ArrayList<E>::add(int index, const E& e) {
 	if (index < 0 || index > count) {
-		//throw new IndexOutOfBoundsException(
-		//	"Index: " + index + ", Size: " + count);
+		std::stringstream s;
+		s << "Index: " << index << ", Size: " << count;
+		throw std::out_of_range(s.str());
 	}
 	arrayResize(count + 1);
 	arrayInsert(index, 1);
@@ -84,8 +87,9 @@ void ArrayList<E>::add(int index, const E& e) {
 template<typename E>
 const E& ArrayList<E>::get(int index) const {
 	if (index < 0 || index > count) {
-		//throw new IndexOutOfBoundsException(
-		//	"Index: " + index + ", Size: " + count);
+		std::stringstream s;
+		s << "Index: " << index << ", Size: " << count;
+		throw std::out_of_range(s.str());
 	}
 	return *(array[index]);
 }
@@ -97,8 +101,9 @@ const E& ArrayList<E>::get(int index) const {
 template<typename E>
 const E& ArrayList<E>::set(int index, const E& e) {
 	if (index < 0 || index > count) {
-		//throw new IndexOutOfBoundsException(
-		//	"Index: " + index + ", Size: " + count);
+		std::stringstream s;
+		s << "Index: " << index << ", Size: " << count;
+		throw std::out_of_range(s.str());
 	}
 	const E& oldElem = *(array[index]);
 	array[index] = (E *)&e;
@@ -111,8 +116,9 @@ const E& ArrayList<E>::set(int index, const E& e) {
 template<typename E>
 const E& ArrayList<E>::remove(int index) {
 	if (index < 0 || index > count) {
-		//throw new IndexOutOfBoundsException(
-		//	"Index: " + index + ", Size: " + count);
+		std::stringstream s;
+		s << "Index: " << index << ", Size: " << count;
+		throw std::out_of_range(s.str());
 	}
 	const E& oldElem = *(array[index]);
 	arrayRemove(index, 1);
@@ -190,4 +196,6 @@ void ArrayList<E>::arrayRemove(int index, int len) {
 
 template class ArrayList<int>;
 template class ArrayListIterator<int>;
+template class ArrayList<std::string>;
+template class ArrayListIterator<std::string>;
 

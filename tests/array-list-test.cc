@@ -6,6 +6,8 @@
  * Author: Paolo Rovelli <paolorovelli@yahoo.it>
  */
 
+#include <string>
+
 #include "list.h"
 #include "array-list.h"
 
@@ -27,8 +29,8 @@ public:
 	}
 
 	void testArrayList() {
-		int a[] = { 4, 3, 2, 1 };
-		List<int> *l = new ArrayList<int>();
+		std::string a[] = { "Hello", "Mr.", "Paolo", "Rovelli" };
+		List<std::string> *l = new ArrayList<std::string>();
 
 		for (int i = 0; i < ARRAY_SIZE(a); i++)
 			CPPUNIT_ASSERT(l->add(a[i]));
@@ -37,7 +39,7 @@ public:
 		for (int i = 0; i < ARRAY_SIZE(a); i++)
 			CPPUNIT_ASSERT_EQUAL(l->get(i), a[i]);
 
-		ListIterator<int> *itr = l->iterator();
+		ListIterator<std::string> *itr = l->iterator();
 		for (int i = 0; itr->hasNext(); i++)
 			CPPUNIT_ASSERT_EQUAL(itr->next(), a[i]);
 	}
