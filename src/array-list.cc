@@ -60,7 +60,7 @@ bool ArrayList<E>::isEmpty() const {
 template<typename E>
 bool ArrayList<E>::add(const E& e) {
 	arrayResize(count + 1);
-	array[count] = (E *)&e;
+	array[count] = const_cast<E*>(&e);
 	count++;
 	return true;
 }
@@ -77,7 +77,7 @@ void ArrayList<E>::add(int index, const E& e) {
 	}
 	arrayResize(count + 1);
 	arrayInsert(index, 1);
-	array[index] = (E *)&e;
+	array[index] = const_cast<E*>(&e);
 	count++;
 }
 
@@ -106,7 +106,7 @@ const E& ArrayList<E>::set(int index, const E& e) {
 		throw std::out_of_range(s.str());
 	}
 	const E& oldElem = *(array[index]);
-	array[index] = (E *)&e;
+	array[index] = const_cast<E*>(&e);
 	return oldElem;
 }
 
