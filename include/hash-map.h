@@ -41,7 +41,7 @@ private:
 };
 
 template<typename K, typename V, typename H, typename E>
-class HashMap : public Map<K,V,H,E> {
+class HashMap : public Map<K,V> {
 public:
 	HashMap();
 	~HashMap();

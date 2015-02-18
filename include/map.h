@@ -20,7 +20,7 @@ public:
 template<typename K, typename V>
 inline MapIterator<K,V>::~MapIterator() { }
 
-template<typename K, typename V, typename H = int, typename E = int>
+template<typename K, typename V>
 class Map {
 public:
 	virtual ~Map() = 0;
@@ -32,8 +32,8 @@ public:
 	virtual MapIterator<K,V>* iterator() const = 0;
 };
 
-template<typename K, typename V, typename H, typename E>
-inline Map<K,V,H,E>::~Map() { };
+template<typename K, typename V>
+inline Map<K,V>::~Map() { };
 
 #endif /* MAP_H */
 
