@@ -9,9 +9,13 @@
 #ifndef HASH_MAP_H
 #define HASH_MAP_H
 
+#include <functional>
+
 #include "map.h"
 
-template<typename K, typename V, typename H = int, typename E = int>
+template<typename K, typename V,
+	typename H = std::hash<K>,
+	typename E = std::equal_to<K>>
 class HashMap;
 
 template<typename K, typename V>
@@ -22,7 +26,8 @@ struct HashMapNode {
 	HashMapNode<K,V> *next;
 
 	HashMapNode();
-	HashMapNode(int h, const K *k, const V *v, HashMapNode<K,V> *n);
+	HashMapNode(int hash, const K *key, const V *value,
+		HashMapNode<K,V> *node);
 	~HashMapNode();
 };
 
@@ -35,29 +40,30 @@ public:
 	const V& next();
 private:
 	const HashMap<K,V> *map;
+	int index;
 	HashMapNode<K,V> *nextNode;
 	HashMapNode<K,V> *currNode;
-	int nextIndex;
 };
 
 template<typename K, typename V, typename H, typename E>
 class HashMap : public Map<K,V> {
 public:
 	HashMap();
+	HashMap(int capacity);
 	~HashMap();
 	// query
 	int size() const;
 	bool isEmpty() const;
-	const V* get(const K& k) const;
+	const V* get(const K& key) const;
 	// modification
-	const V* put(const K& k, const V& v);
-	const V* remove(const K& k);
+	const V* put(const K& key, const V& value);
+	const V* remove(const K& key);
 	// iterator
 	friend class HashMapIterator<K,V>;
 	MapIterator<K,V>* iterator() const;
 private:
-	HashMapNode<K,V> **array;
-	int arraylen;
+	HashMapNode<K,V> **table;
+	int tablelen;
 	int count;
 	// functors
 	H hashCode;
