@@ -50,6 +50,7 @@ private:
 	int count;
 	E **array;
 	int arraylen;
+	// internals
 	void arrayResize(int len);
 	void arrayInsert(int index, int len);
 	void arrayRemove(int index, int len);

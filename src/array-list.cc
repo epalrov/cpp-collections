@@ -170,6 +170,9 @@ const E& ArrayListIterator<E>::next() {
 	return *(list->array[currIndex]);
 }
 
+/**
+ * Internals
+ */
 template<typename E>
 void ArrayList<E>::arrayResize(int len) {
 	E **a = array;

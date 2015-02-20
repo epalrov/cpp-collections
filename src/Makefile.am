@@ -5,6 +5,7 @@ lib_LTLIBRARIES = libc++-collections.la
 
 libc___collections_la_SOURCES = array-list.cc \
                                 linked-list.cc \
-                                hash-map.cc
+                                hash-map.cc \
+                                tree-set.cc
 libc___collections_la_LDFLAGS = -no-undefined -version-info 1:0:0
 
