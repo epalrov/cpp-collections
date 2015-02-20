@@ -191,11 +191,12 @@ const V& HashMapIterator<K,V>::next() {
 	if (nextNode->next != NULL) {
 		nextNode = nextNode->next;
 	} else {
+		index++;
 		nextNode = NULL;
 		for ( ; index < map->tablelen; index++) {
 			if (map->table[index] != NULL) {
 				nextNode = map->table[index];
-				//break;
+				break;
 			}
 		}
 	}
